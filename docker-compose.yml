@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: homemate
+      POSTGRES_USER: homemate
+      POSTGRES_PASSWORD: homemate
+    ports:
+      - "5432:5432"
+    volumes:
+      - homemate_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U homemate -d homemate"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  homemate_postgres_data:
